@@ -128,14 +128,15 @@ typedef struct clientes {  //struct para agrupar as informações
  
  
    
-    
+void menuexcluir();
+void menuerelatorio();
 // Submenu para o modulo de cadastros
-void menuCadastro(){
+void menuCadastro(){  // Tela Menu de Cadastro
 	char resposta = ' ';
 	do {
 		std::system("cls");
 		cout << "===========================================" << endl;
-		cout << "           MODULO DE CADASTRO              " << endl;
+		cout << "           LOCADORA - MODULO DE CADASTRO   " << endl;
 		cout << "===========================================" << endl;
 		cout << "  1. Cadastrar Cliente                     " << endl;
 		cout << "  2. Cadastrar Veiculo                     " << endl;
@@ -158,6 +159,14 @@ void menuCadastro(){
 				std::system("cls");
 				novalocacao();
 				break;
+			case '4':
+				std::system("cls");
+				menuexcluir(); 
+				break;
+			case '5':
+				std::system("cls");
+				menuerelatorio();
+				break;
 			case '0':
 				break;
 			default:
@@ -168,7 +177,215 @@ void menuCadastro(){
 	} while (resposta != '0');
 }
 
-void menu(){
+void menuConsulta(){  // Tela Menu de Consulta
+	char resposta = ' ';
+	do {
+		std::system("cls");
+		cout << "===========================================" << endl;
+		cout << "           LOCADORA - Consultas		    " << endl;
+		cout << "===========================================" << endl;
+		cout << "  1.  Listar Clientes                   	" << endl;
+		cout << "  2.  Listar Veiculos                     	" << endl;
+		cout << "  3. Listar Locacoes                       " << endl;
+		cout << "  0. Voltar ao Menu Principal              " << endl;
+		cout << "===========================================" << endl;
+		cout << "Selecione uma opcao: ";
+		cin >> resposta;
+
+		switch (resposta){
+			case '1':
+				std::system("cls");
+				cadCliente();
+				break;
+			case '2':
+				std::system("cls");
+				cadVeiculo();
+				break;
+			case '3':
+				std::system("cls");
+				novalocacao();
+				break;
+			case '4':
+				std::system("cls");
+				menuexcluir(); 
+				break;
+			case '5':
+				std::system("cls");
+				menuerelatorio();
+				break;
+			case '0':
+				break;
+			default:
+				cout << "\nOpcao invalida! Tente novamente.\n" << endl;
+				std::system("pause");
+				break;
+		}
+	} while (resposta != '0');
+}
+
+
+
+
+
+void menuEditar(){   // Tela Menu de Edicao
+	char resposta = ' ';
+	do {
+		std::system("cls");
+		cout << "===========================================" << endl;
+		cout << "           LOCADORA - Edicao	            " << endl;
+		cout << "===========================================" << endl;
+		cout << "  1.  Editar Clientes                   	" << endl;
+		cout << "  2.  Editar Veiculos                     	" << endl;
+		cout << "  3.  Editar  Locacoes                      " << endl;
+		cout << "  0. Voltar ao Menu Principal              " << endl;
+		cout << "===========================================" << endl;
+		cout << "Selecione uma opcao: ";
+		cin >> resposta;
+
+		switch (resposta){
+			case '1':
+				std::system("cls");
+				cadCliente();
+				break;
+			case '2':
+				std::system("cls");
+				cadVeiculo();
+				break;
+			case '3':
+				std::system("cls");
+				menuEditar(); 
+				break;
+			case '4':
+				std::system("cls");
+				menuexcluir();  
+				break;
+			case '5':
+				std::system("cls");
+				menuerelatorio();
+				break;
+				break;
+			case '0':
+				break;
+			default:
+				cout << "\nOpcao invalida! Tente novamente.\n" << endl;
+				std::system("pause");
+				break;
+		}
+	} while (resposta != '0');
+}
+
+
+
+
+
+
+void menuexcluir(){ // Tela Menu de Exclusao
+	char resposta = ' ';
+	do {
+		std::system("cls");
+		cout << "===========================================" << endl;
+		cout << "          LOCADORA -  exclusao	            " << endl;
+		cout << "===========================================" << endl;
+		cout << "  1.  Excluir Clientes                   	" << endl;
+		cout << "  2.  Excluir Veiculos                     " << endl;
+		cout << "  3.  Excluir  Locacoes                    " << endl;
+		cout << "  0. Voltar ao Menu Principal              " << endl;
+		cout << "===========================================" << endl;
+		cout << "Selecione uma opcao: ";
+		cin >> resposta;
+
+		switch (resposta){
+			case '1':
+				std::system("cls");
+				cadCliente();
+				break;
+			case '2':
+				std::system("cls");
+				cadVeiculo();
+				break;
+			case '3':
+				std::system("cls");
+				menuEditar(); 
+				break;
+				case '4':
+				std::system("cls");
+				menuexcluir(); 
+				break;
+			case '5':
+				std::system("cls");
+				menuerelatorio();
+				break;
+				break;
+			case '0':
+				break;
+			default:
+				cout << "\nOpcao invalida! Tente novamente.\n" << endl;
+				std::system("pause");
+				break;
+		}
+	} while (resposta != '0');
+}
+
+
+
+
+
+void menuerelatorio(){    // Tela Menu de Relatorio
+	char resposta = ' ';
+	do {
+		std::system("cls");
+		cout << "===========================================" << endl;
+		cout << "           LOCADORA - Relatorio            " << endl;
+		cout << "===========================================" << endl;
+		cout << "  1.  Relatorio de Clientes               " << endl;
+		cout << "  2.  Relatorio de Veiculos                " << endl;
+		cout << "  3.  Relatorio de Locacoes                " << endl;
+		cout << "  0. Voltar ao Menu Principal              " << endl;
+		cout << "===========================================" << endl;
+		cout << "Selecione uma opcao: ";
+		cin >> resposta;
+
+		switch (resposta){
+			case '1':
+				std::system("cls");
+				cadCliente();
+				break;
+			case '2':
+				std::system("cls");
+				cadVeiculo();
+				break;
+			case '3':
+				std::system("cls");
+				menuEditar(); 
+				break;
+				case '4':
+				std::system("cls");
+				menuexcluir(); 
+				break;
+			case '5':
+				std::system("cls");
+				menuerelatorio(); 
+				break;
+				break;
+			case '0':
+				break;
+			default:
+				cout << "\nOpcao invalida! Tente novamente.\n" << endl;
+				std::system("pause");
+				break;
+		}
+	} while (resposta != '0');
+}
+
+
+
+
+
+
+
+
+
+void menu(){ // Tela Menu Principal
 	char resposta = ' ';
 	do {
 		std::system("cls");
@@ -191,27 +408,24 @@ void menu(){
 				break;
 			case '2':
 				std::system("cls");
-				cout << "\n[Modulo de Consultas em desenvolvimento...]\n" << endl;
-				std::system("pause");
+				menuConsulta();
 				break;
 			case '3':
 				std::system("cls");
-				cout << "\n[Modulo de Edicao em desenvolvimento...]\n" << endl;
-				std::system("pause");
+				menuEditar(); 
 				break;
 			case '4':
 				std::system("cls");
-				cout << "\n[Modulo de Exclusao em desenvolvimento...]\n" << endl;
-				std::system("pause");
+				menuexcluir();
 				break;
 			case '5':
 				std::system("cls");
-				cout << "\n[Modulo de Relatorio em desenvolvimento...]\n" << endl;
-				std::system("pause");
+				menuerelatorio(); 
+				break;
 				break;
 			case '6':
 				std::system("cls");
-				cout << "\nEncerrando o sistema... Ate logo!\n" << endl;
+				cout << "\n   Programa encerrado com sucesso!\n" << endl;
 				break;
 			default:
 				cout << "\nOpcao invalida! Tente novamente.\n" << endl;
@@ -224,7 +438,7 @@ void menu(){
     
     
     
-int main(){
+int main(){ 
 	menu(); 
 
 	
