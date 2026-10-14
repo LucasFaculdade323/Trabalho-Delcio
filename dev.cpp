@@ -159,14 +159,14 @@ void menuCadastro(){  // Tela Menu de Cadastro
 				std::system("cls");
 				novalocacao();
 				break;
-			case '4':
-				std::system("cls");
-				menuexcluir(); 
-				break;
-			case '5':
-				std::system("cls");
-				menuerelatorio();
-				break;
+			//case '4':
+				//std::system("cls");
+				//menuexcluir(); 
+				//break;
+			//case '5':
+				//std::system("cls");
+				//menuerelatorio();
+				//break;
 			case '0':
 				break;
 			default:
@@ -195,24 +195,24 @@ void menuConsulta(){  // Tela Menu de Consulta
 		switch (resposta){
 			case '1':
 				std::system("cls");
-				cadCliente();
+				//cadCliente();
 				break;
 			case '2':
 				std::system("cls");
-				cadVeiculo();
+				//cadVeiculo();
 				break;
 			case '3':
 				std::system("cls");
-				novalocacao();
+				//novalocacao();
 				break;
-			case '4':
-				std::system("cls");
-				menuexcluir(); 
-				break;
-			case '5':
-				std::system("cls");
-				menuerelatorio();
-				break;
+			//case '4':
+				//std::system("cls");
+				//menuexcluir(); 
+				//break;
+			//case '5':
+				//std::system("cls");
+				//menuerelatorio();
+				//break;
 			case '0':
 				break;
 			default:
@@ -245,25 +245,25 @@ void menuEditar(){   // Tela Menu de Edicao
 		switch (resposta){
 			case '1':
 				std::system("cls");
-				cadCliente();
+				//cadCliente();
 				break;
 			case '2':
 				std::system("cls");
-				cadVeiculo();
+				//cadVeiculo();
 				break;
 			case '3':
 				std::system("cls");
-				menuEditar(); 
+				//menuEditar(); 
 				break;
-			case '4':
-				std::system("cls");
-				menuexcluir();  
-				break;
-			case '5':
-				std::system("cls");
-				menuerelatorio();
-				break;
-				break;
+			//case '4':
+				//std::system("cls");
+				//menuexcluir();  
+				//break;
+			//case '5':
+				//std::system("cls");
+				//menuerelatorio();
+				//break;
+				//break;
 			case '0':
 				break;
 			default:
@@ -297,25 +297,25 @@ void menuexcluir(){ // Tela Menu de Exclusao
 		switch (resposta){
 			case '1':
 				std::system("cls");
-				cadCliente();
+				//cadCliente();
 				break;
 			case '2':
 				std::system("cls");
-				cadVeiculo();
+				//cadVeiculo();
 				break;
 			case '3':
 				std::system("cls");
-				menuEditar(); 
+				//menuEditar(); 
 				break;
-				case '4':
-				std::system("cls");
-				menuexcluir(); 
-				break;
-			case '5':
-				std::system("cls");
-				menuerelatorio();
-				break;
-				break;
+			//case '4':
+				//std::system("cls");
+				//menuexcluir(); 
+				//break;
+			//case '5':
+				//std::system("cls");
+				//menuerelatorio();
+				//break;
+				//break;
 			case '0':
 				break;
 			default:
@@ -348,25 +348,25 @@ void menuerelatorio(){    // Tela Menu de Relatorio
 		switch (resposta){
 			case '1':
 				std::system("cls");
-				cadCliente();
+				//cadCliente();
 				break;
 			case '2':
 				std::system("cls");
-				cadVeiculo();
+				//cadVeiculo();
 				break;
 			case '3':
 				std::system("cls");
-				menuEditar(); 
+				//menuEditar(); 
 				break;
-				case '4':
-				std::system("cls");
-				menuexcluir(); 
-				break;
-			case '5':
-				std::system("cls");
-				menuerelatorio(); 
-				break;
-				break;
+			//case '4':
+				//std::system("cls");
+				//menuexcluir(); 
+				//break;
+			//case '5':
+				//std::system("cls");
+				//menuerelatorio(); 
+				//break;
+				//break;
 			case '0':
 				break;
 			default:
@@ -422,7 +422,7 @@ void menu(){ // Tela Menu Principal
 				std::system("cls");
 				menuerelatorio(); 
 				break;
-				break;
+				//break;
 			case '6':
 				std::system("cls");
 				cout << "\n   Programa encerrado com sucesso!\n" << endl;
@@ -448,6 +448,3 @@ int main(){
 
 
 
-
-
- 
