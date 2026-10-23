@@ -1,6 +1,7 @@
 #include <iostream>
 #include <ctime> 
 #include <cstdlib>
+#include <stdio.h>
 using namespace std; 
 
 FILE *db_clientes, *db_veiculo, *db_locacoes; // Ponteiros
@@ -11,7 +12,7 @@ typedef struct clientes {  //struct para agrupar as informações
   char cpf[50];
   char endereco[50];
   char telefone[50];
- 
+  time_t cadCliente;
   
 }reg_clientes;
   
@@ -123,7 +124,82 @@ typedef struct clientes {  //struct para agrupar as informações
 	fclose(db_locacoes);
 	return 0;
  }
+
+
+ int CadastroCliente(){    //cadastro de locacoes
+ 	reg_clientes clientes; 
+	int resposta = 1;
+
+	db_clientes = fopen("db_clientes.dat", "ab");
+	do {
+	  	cout << "Digite o ID do cliente:" << endl;
+ 		cin >> clientes.id;
+		
+ 		cout << "Digite o nome do cliente:" << endl;
+ 		cin >> clientes.nome;
+
+ 		cout << "Digite o CPF:" << endl;
+		cin >> clientes.cpf;
+
+		cout << "Digite o endereco:" << endl;
+		cin >> clientes.endereco;
+
+		cout << "Digite o Telefone:" << endl;
+		cin >> clientes.telefone;
+
+		clientes.cadCliente = time(nullptr);
+		
+	
+		fwrite(&clientes, sizeof(reg_clientes ), 1, db_clientes);
+ 		cout << "Cadastro realizado:" << endl;
+ 		cout << "Deseja continuar cadastrando? (digite 1 para continuar/2 para sair): ";
+ 		cin >> resposta;
+	} while (resposta == 1 );
+ 	
+	fclose(db_clientes);
+	return 0;
+ }
  
+ int pesquisacliente(){
+	reg_clientes clientes;
+	int id, resposta;
+	db_clientes = fopen("db_clientes.dat", "rb");
+	if (db_clientes == NULL){
+		cout << "Erro ao abrir o arquivo" << endl;
+		return 1;
+	} //if para verificar se o banco está legivel
+
+	do {
+		bool encontrado = false;
+		rewind(db_clientes);
+		cout << "Digite o ID da pessoa";
+		cin >> id;
+
+		while (fread(&clientes, sizeof(reg_clientes), 1, db_clientes) == 1){
+			if (clientes.id == id){
+				cout << "ID: " << clientes.id << endl;
+				cout << "Nome: " << clientes.nome << endl;
+				cout << "CPF: " << clientes.cpf << endl;
+				cout << "Telefone: " << clientes.telefone << endl;
+				cout << "Endereco: " << clientes.endereco << endl;
+				cout << "Data de cadastro: " << ctime(&clientes.cadCliente) << endl;
+				encontrado = true;
+				break;
+			}
+		}
+
+		if (!encontrado){
+			cout << "Cliente nao encontrado" << endl;
+		}
+
+		cout << "Deseja continuar pesquisando? (digite 1 para continuar/2 para sair): ";
+		cin >> resposta;
+	} while (resposta == 1);
+
+	fclose(db_clientes);
+	return 0;
+}
+
  
  
  
@@ -159,15 +235,9 @@ void menuCadastro(){  // Tela Menu de Cadastro
 				std::system("cls");
 				novalocacao();
 				break;
-			//case '4':
-				//std::system("cls");
-				//menuexcluir(); 
-				//break;
-			//case '5':
-				//std::system("cls");
-				//menuerelatorio();
-				//break;
+			
 			case '0':
+				std::system("cls");
 				break;
 			default:
 				cout << "\nOpcao invalida! Tente novamente.\n" << endl;
@@ -176,6 +246,8 @@ void menuCadastro(){  // Tela Menu de Cadastro
 		}
 	} while (resposta != '0');
 }
+
+
 
 void menuConsulta(){  // Tela Menu de Consulta
 	char resposta = ' ';
@@ -195,7 +267,8 @@ void menuConsulta(){  // Tela Menu de Consulta
 		switch (resposta){
 			case '1':
 				std::system("cls");
-				//cadCliente();
+				pesquisacliente();
+			
 				break;
 			case '2':
 				std::system("cls");
@@ -213,7 +286,8 @@ void menuConsulta(){  // Tela Menu de Consulta
 				//std::system("cls");
 				//menuerelatorio();
 				//break;
-			case '0':
+			case '0': 
+			    menu();
 				break;
 			default:
 				cout << "\nOpcao invalida! Tente novamente.\n" << endl;
