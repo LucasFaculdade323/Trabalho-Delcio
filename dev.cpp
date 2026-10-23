@@ -2,6 +2,7 @@
 #include <ctime> 
 #include <cstdlib>
 #include <stdio.h>
+#include <cstring>
 using namespace std; 
 
 FILE *db_clientes, *db_veiculo, *db_locacoes; // Ponteiros
@@ -24,6 +25,7 @@ typedef struct clientes {  //struct para agrupar as informações
   	char tipo[50];
   	char placa[50];
   	char valor[50];
+	time_t cadVeiculo;  
   	
   	
   }reg_veiculos;
@@ -88,6 +90,7 @@ typedef struct clientes {  //struct para agrupar as informações
 	cin >> veiculos.tipo;
 	cout << "Digite o valor do veiculo:" << endl;
 	cin >> veiculos.valor;
+	veiculos.cadVeiculo = time(nullptr);
  	fwrite(&veiculos, sizeof(veiculos), 1, db_veiculo);
  	cout << "Cadastro realizado:" << endl;
  	
@@ -200,10 +203,92 @@ typedef struct clientes {  //struct para agrupar as informações
 	return 0;
 }
 
+ int pesquisaveiculos(){
+	reg_veiculos veiculos;
+	int id, resposta;
+	db_veiculo = fopen("db_veiculos.dat", "rb");
+	if (db_veiculo == NULL){
+		cout << "Erro ao abrir o arquivo" << endl;
+		return 1;
+	} //if para verificar se o banco está legivel
+
+	do {
+		bool encontrado = false;
+		rewind(db_veiculo);
+		cout << "Digite o ID da pessoa";
+		cin >> id;
+
+		while (fread(&veiculos, sizeof(reg_veiculos), 1, db_veiculo) == 1){
+			if (veiculos.id == id){
+				cout << "ID: " << veiculos.id       << endl;
+				cout << "Placa: " << veiculos.placa << endl;
+				cout << "Modelo: " << veiculos.modelo << endl;
+				cout << "Ano: " << veiculos.ano 	<< endl;
+				cout << "Tipo: " << veiculos.tipo 	<< endl;
+				cout << "Valor: " << veiculos.valor << endl;
+				cout << "Data de cadastro: " << ctime(&veiculos.cadVeiculo) << endl;
+				encontrado = true;
+				break;
+			}
+		}
+
+		if (!encontrado){
+			cout << "Cliente nao encontrado" << endl;
+		}
+
+		cout << "Deseja continuar pesquisando? (digite 1 para continuar/2 para sair): ";
+		cin >> resposta;
+	} while (resposta == 1);
+
+	fclose(db_veiculo);
+	return 0;
+}
+
+ int pesquisalocacao(){
+	reg_locacoes locacao;
+	char id[50];
+int resposta;
+	db_locacoes = fopen("db_locacoes.dat", "rb");
+	if (db_locacoes == NULL){
+		cout << "Erro ao abrir o arquivo" << endl;
+		return 1;
+	} //if para verificar se o banco está legivel
+
+	do {
+		bool encontrado = false;
+		rewind(db_locacoes);
+		cout << "Digite o ID da pessoa";
+		cin >> id;
+
+		while (fread(&locacao, sizeof(reg_locacoes), 1, db_locacoes) == 1){
+			if (strcmp(locacao.cliente, id) == 0){
+				cout << "ID: " << locacao.cliente       << endl;
+				cout << "Placa: " << locacao.vei_placa << endl;
+				cout << "Dias: " << locacao.dias << endl;
+				cout << "Valor: " << locacao.valor 	<< endl;
+				cout << "Data de cadastro: " << ctime(&locacao.cadastro) << endl;
+				encontrado = true;
+				break;
+			}
+		}
+
+		if (!encontrado){
+			cout << "Cliente nao encontrado" << endl;
+		}
+
+		cout << "Deseja continuar pesquisando? (digite 1 para continuar/2 para sair): ";
+		cin >> resposta;
+	} while (resposta == 1);
+	fclose(db_locacoes);
+	
+	return 0;
+}
+
+
  
  
  
-   
+void menu();  
 void menuexcluir();
 void menuerelatorio();
 // Submenu para o modulo de cadastros
@@ -254,7 +339,7 @@ void menuConsulta(){  // Tela Menu de Consulta
 	do {
 		std::system("cls");
 		cout << "===========================================" << endl;
-		cout << "           LOCADORA - Consultas		    " << endl;
+		cout << "           LOCADORA - Pesquisa		    " 	  << endl;
 		cout << "===========================================" << endl;
 		cout << "  1.  Listar Clientes                   	" << endl;
 		cout << "  2.  Listar Veiculos                     	" << endl;
@@ -272,11 +357,11 @@ void menuConsulta(){  // Tela Menu de Consulta
 				break;
 			case '2':
 				std::system("cls");
-				//cadVeiculo();
+				pesquisaveiculos();
 				break;
 			case '3':
 				std::system("cls");
-				//novalocacao();
+				pesquisalocacao();
 				break;
 			//case '4':
 				//std::system("cls");
@@ -467,7 +552,7 @@ void menu(){ // Tela Menu Principal
 		cout << "        LOCADORA - MENU PRINCIPAL          " << endl;
 		cout << "===========================================" << endl;
 		cout << "  1. Modulo de cadastro                    " << endl;
-		cout << "  2. Consultas                             " << endl;
+		cout << "  2. Pesquisa                   			" << endl;
 		cout << "  3. Edicao                                " << endl;
 		cout << "  4. Excluir                               " << endl;
 		cout << "  5. Relatorio                             " << endl;
