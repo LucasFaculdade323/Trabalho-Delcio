@@ -560,52 +560,6 @@ void menuexcluir(){ // Tela Menu de Exclusao
 
 
 
-void menuerelatorio(){    // Tela Menu de Relatorio
-	char resposta = ' ';
-	do {
-		std::system("cls");
-		cout << "===========================================" << endl;
-		cout << "           LOCADORA - Relatorio            " << endl;
-		cout << "===========================================" << endl;
-		cout << "  1.  Relatorio de Clientes               " << endl;
-		cout << "  2.  Relatorio de Veiculos                " << endl;
-		cout << "  3.  Relatorio de Locacoes                " << endl;
-		cout << "  0. Voltar ao Menu Principal              " << endl;
-		cout << "===========================================" << endl;
-		cout << "Selecione uma opcao: ";
-		cin >> resposta;
-
-		switch (resposta){
-			case '1':
-				std::system("cls");
-				//cadCliente();
-				break;
-			case '2':
-				std::system("cls");
-				//cadVeiculo();
-				break;
-			case '3':
-				std::system("cls");
-				//menuEditar(); 
-				break;
-			//case '4':
-				//std::system("cls");
-				//menuexcluir(); 
-				//break;
-			//case '5':
-				//std::system("cls");
-				//menuerelatorio(); 
-				//break;
-				//break;
-			case '0':
-				break;
-			default:
-				cout << "\nOpcao invalida! Tente novamente.\n" << endl;
-				std::system("pause");
-				break;
-		}
-	} while (resposta != '0');
-}
 
 
 
