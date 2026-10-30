@@ -284,6 +284,77 @@ int resposta;
 	return 0;
 }
 
+int relatorio(){
+	reg_clientes clientes;
+	reg_veiculos veiculos;
+	reg_locacoes locacoes;
+	FILE *arquivo_clientes, *arquivo_veiculos, *arquivo_locacoes;
+	int opcao;
+	
+	cout << "GERAR RELATORIOS" << endl;
+	cout << "1. Relatorio de Clientes" << endl;
+	cout << "2. Relatorio de Veiculos" << endl;
+	cout << "3. Relatorio de Locacoes" << endl;
+	cout << "0. Voltar ao Menu Principal" << endl;
+	cout << "Escolha uma opcao: ";
+	cin >> opcao;
+	
+	switch (opcao){
+		case 1:
+			arquivo_clientes = fopen("db_clientes.dat", "rb");
+			if (arquivo_clientes == NULL){
+				cout << "Erro ao abrir o arquivo" << endl;
+				return 1;
+			}
+			cout << "RELATORIO DE CLIENTES" << endl;
+			cout << "==========================================" << endl;
+			cout << "Id | Nome | CPF | Telefone | Endereco | Data de Cadastro" << endl;
+			while (fread(&clientes, sizeof(reg_clientes), 1, arquivo_clientes) == 1){
+				cout << clientes.id << " | " << clientes.nome << " | " << clientes.cpf << " | " << clientes.telefone << " | " << clientes.endereco << " | " << ctime(&clientes.cadCliente) << endl;
+			}
+			cout << "==========================================" << endl;
+			fclose(arquivo_clientes);
+			break;
+
+		case 2:
+			arquivo_veiculos = fopen("db_veiculos.dat", "rb");
+			if (arquivo_veiculos == NULL){
+				cout << "Erro ao abrir o arquivo" << endl;
+				return 1;
+			}
+			cout << "RELATORIO DE VEICULOS" << endl;
+			cout << "==========================================" << endl;
+			cout << "Id | Modelo | Marca | Ano | Tipo | Placa | Valor | Data de Cadastro" << endl;
+			while (fread(&veiculos, sizeof(reg_veiculos), 1, arquivo_veiculos) == 1){
+				cout << veiculos.id << " | " << veiculos.modelo << " | " << veiculos.marca << " | " << veiculos.ano << " | " << veiculos.tipo << " | " << veiculos.placa << " | " << veiculos.valor << " | " << ctime(&veiculos.cadVeiculo) << endl;
+			}
+			cout << "==========================================" << endl;
+			fclose(arquivo_veiculos);
+			break;
+		case 3:
+			arquivo_locacoes = fopen("db_locacoes.dat", "rb");
+			if (arquivo_locacoes == NULL){
+				cout << "Erro ao abrir o arquivo" << endl;
+				return 1;
+			}
+			cout << "RELATORIO DE LOCACOES" << endl;
+			cout << "==========================================" << endl;
+			cout << " Clientes| Placa do veiculo | Dias | Valor |Cadastro " << endl;
+			while (fread(&locacoes, sizeof(reg_locacoes), 1, arquivo_locacoes) == 1){
+				cout << locacoes.cliente << " | " << locacoes.vei_placa << " | " << locacoes.dias << " | " << locacoes.valor << " | " << ctime(&locacoes.cadastro) << endl;
+			}
+			cout << "==========================================" << endl;
+			fclose(arquivo_locacoes);
+			
+			break; 
+		case 0:
+			break;
+		default:
+			cout << "Opcao invalida" << endl;
+			break;
+	}
+}
+
 
  
  
@@ -579,7 +650,7 @@ void menu(){ // Tela Menu Principal
 				break;
 			case '5':
 				std::system("cls");
-				menuerelatorio(); 
+				relatorio(); 
 				break;
 				//break;
 			case '6':
