@@ -1,634 +1,854 @@
 #include <iostream>
-#include <ctime> 
+#include <ctime>
 #include <cstdlib>
 #include <stdio.h>
 #include <cstring>
-using namespace std; 
+#include <limits>
+using namespace std;
 
 FILE *db_clientes, *db_veiculo, *db_locacoes; // Ponteiros
 
-typedef struct clientes {  //struct para agrupar as informações 
-  int id;
-  char nome[50];
-  char cpf[50];
-  char endereco[50];
-  char telefone[50];
-  time_t cadCliente;
-  
+typedef struct clientes {  //struct para agrupar as informações
+    int id;
+    char nome[50];
+    char cpf[50];
+    char endereco[50];
+    char telefone[50];
+    time_t cadCliente;
+
 }reg_clientes;
-  
-  typedef struct veiculos {
-  	int id;
-  	char modelo[50];
-  	char marca[50];
-  	char ano[50];
-  	char tipo[50];
-  	char placa[50];
-  	char valor[50];
-	time_t cadVeiculo;  
-  	
-  	
-  }reg_veiculos;
-  
-  typedef struct locacoes{
-  	char cliente[50]; //clientes vindo da struct de clientes 
-  	char vei_placa[50]; //placa do veiculo vindo da struct de veiculos
-  	char dias[50];
-  	char valor[50];
-  	time_t cadastro;   //Adiciona a hora atual
-  }reg_locacoes;
-  
-  //cadastro dos clientes  
- int cadCliente(){
-	reg_clientes clientes; 
-	int resposta;
- 	db_clientes = fopen("db_clientes.dat", "ab");
- 
-	do { 
-		cout << "Digite o Id do cliente:" << endl;
-		cin >> clientes.id;
 
-		cout << "Digite o nome do cliente:" << endl;
-		cin >> clientes.nome;
+typedef struct veiculos {
+    int id;
+    char modelo[50];
+    char marca[50];
+    char ano[50];
+    char tipo[50];
+    char placa[50];
+    char valor[50];
+    time_t cadVeiculo;
 
-		cout << "Digite o CPF do cliente:" << endl;
-		cin >> clientes.cpf;
-		
-		cout << "Digite o telefone do cliente:" << endl;
-		cin >> clientes.telefone;
-		cout << "Digite o endereco do cliente:" << endl;
-		cin >> clientes.endereco; 
+}reg_veiculos;
 
-		fwrite(&clientes, sizeof(clientes), 1, db_clientes);
+typedef struct locacoes{
+    char cliente[50]; //clientes vindo da struct de clientes
+    char vei_placa[50]; //placa do veiculo vindo da struct de veiculos
+    char dias[50];
+    char valor[50];
+    time_t cadastro;   //Adiciona a hora atual
+}reg_locacoes;
 
-		cout << "Cadastro realizado" << endl;
-		cout << "Deseja continuar cadastrando? (digite 1 para continuar/2 para sair): ";
-		cin >> resposta;
+//cadastro dos clientes
+int cadCliente(){
+    reg_clientes clientes;
+    int resposta;
+    db_clientes = fopen("db_clientes.dat", "ab");
 
-	} while (resposta == 1);
-	
-	fclose(db_clientes);
-	return 0;
-}
-	
- int cadVeiculo(){    //cadastro dos veiculos
- 	reg_veiculos veiculos; 
-	int resposta;
-	std::system("cls");
-	db_veiculo = fopen("db_veiculos.dat", "ab");
-	do {
-		
- 	cout << "Digite o ID do Veiculo:" << endl;
- 	cin >> veiculos.id;
- 	cout << "Digite o numero da placa veiculo:" << endl;
- 	cin >> veiculos.placa;
- 	cout << "Digite o modelo do veiculo:" << endl;
-	cin >> veiculos.modelo;
-	cout << "Digite o ano do veiculo:" << endl;
-	cin >> veiculos.ano;
-	cout << "Digite o tipo do veiculo:" << endl;
-	cin >> veiculos.tipo;
-	cout << "Digite o valor do veiculo:" << endl;
-	cin >> veiculos.valor;
-	veiculos.cadVeiculo = time(nullptr);
- 	fwrite(&veiculos, sizeof(veiculos), 1, db_veiculo);
- 	cout << "Cadastro realizado:" << endl;
- 	
- 	cout << "Deseja continuar cadastrando? (digite 1 para continuar/2 para sair): ";
- 	cin >> resposta;
-	} while (resposta == 1 );
- 	
-	fclose(db_veiculo);
-	return 0;
- }
- 
-  int novalocacao(){    //cadastro de locacoes
- 	reg_locacoes locacao; 
-	int resposta = 1;
+    if (db_clientes == NULL) {
+        cout << "Erro ao abrir o arquivo" << endl;
+        return 1;
+    }
 
-	db_locacoes = fopen("db_locacoes.dat", "ab");
-	do {
-	  	cout << "Digite o ID do cliente para nova locacao:" << endl;
- 		cin >> locacao.cliente;
- 		cout << "Digite o numero da placa veiculo:" << endl;
- 		cin >> locacao.vei_placa;
- 		cout << "Dias:" << endl;
-		cin >> locacao.dias;
-		cout << "Digite o valor:" << endl;
-		cin >> locacao.valor;
-		locacao.cadastro = time(nullptr);
-	
-		fwrite(&locacao, sizeof(reg_locacoes ), 1, db_locacoes);
- 		cout << "Cadastro realizado:" << endl;
- 		cout << "Deseja continuar cadastrando? (digite 1 para continuar/2 para sair): ";
- 		cin >> resposta;
-	} while (resposta == 1 );
- 	
-	fclose(db_locacoes);
-	return 0;
- }
+    do {
 
+        cout << "Digite o Id do cliente:" << endl;
+        while (!(cin >> clientes.id)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Id inválido. Digite novamente:" << endl;
+        }
 
- int CadastroCliente(){    //cadastro de locacoes
- 	reg_clientes clientes; 
-	int resposta = 1;
+        cout << "Digite o nome do cliente:" << endl;
+        cin >> ws;
+        while (!cin.getline(clientes.nome, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
 
-	db_clientes = fopen("db_clientes.dat", "ab");
-	do {
-	  	cout << "Digite o ID do cliente:" << endl;
- 		cin >> clientes.id;
-		
- 		cout << "Digite o nome do cliente:" << endl;
- 		cin >> clientes.nome;
+        cout << "Digite o CPF do cliente:" << endl;
+        cin >> ws;
+        while (!cin.getline(clientes.cpf, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
 
- 		cout << "Digite o CPF:" << endl;
-		cin >> clientes.cpf;
+        cout << "Digite o telefone do cliente:" << endl;
+        cin >> ws;
+        while (!cin.getline(clientes.telefone, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
 
-		cout << "Digite o endereco:" << endl;
-		cin >> clientes.endereco;
+        cout << "Digite o endereco do cliente:" << endl;
+        cin >> ws;
+        while (!cin.getline(clientes.endereco, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
 
-		cout << "Digite o Telefone:" << endl;
-		cin >> clientes.telefone;
+        clientes.cadCliente = time(nullptr);
+        fwrite(&clientes, sizeof(clientes), 1, db_clientes);
 
-		clientes.cadCliente = time(nullptr);
-		
-	
-		fwrite(&clientes, sizeof(reg_clientes ), 1, db_clientes);
- 		cout << "Cadastro realizado:" << endl;
- 		cout << "Deseja continuar cadastrando? (digite 1 para continuar/2 para sair): ";
- 		cin >> resposta;
-	} while (resposta == 1 );
- 	
-	fclose(db_clientes);
-	return 0;
- }
- 
- int pesquisacliente(){
-	reg_clientes clientes;
-	int id, resposta;
-	db_clientes = fopen("db_clientes.dat", "rb");
-	if (db_clientes == NULL){
-		cout << "Erro ao abrir o arquivo" << endl;
-		return 1;
-	} //if para verificar se o banco está legivel
+        cout << "Cadastro realizado" << endl;
+        cout << "Deseja continuar cadastrando? (digite 1 para continuar/2 para sair): ";
 
-	do {
-		bool encontrado = false;
-		rewind(db_clientes);
-		cout << "Digite o ID da pessoa";
-		cin >> id;
+        while (!(cin >> resposta) || (resposta != 1 && resposta != 2)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Resposta Invalida. Digite 1 ou 2:";
+        }
 
-		while (fread(&clientes, sizeof(reg_clientes), 1, db_clientes) == 1){
-			if (clientes.id == id){
-				cout << "ID: " << clientes.id << endl;
-				cout << "Nome: " << clientes.nome << endl;
-				cout << "CPF: " << clientes.cpf << endl;
-				cout << "Telefone: " << clientes.telefone << endl;
-				cout << "Endereco: " << clientes.endereco << endl;
-				cout << "Data de cadastro: " << ctime(&clientes.cadCliente) << endl;
-				encontrado = true;
-				break;
-			}
-		}
+    } while (resposta == 1);
 
-		if (!encontrado){
-			cout << "Cliente nao encontrado" << endl;
-		}
-
-		cout << "Deseja continuar pesquisando? (digite 1 para continuar/2 para sair): ";
-		cin >> resposta;
-	} while (resposta == 1);
-
-	fclose(db_clientes);
-	return 0;
+    fclose(db_clientes);
+    return 0;
 }
 
- int pesquisaveiculos(){
-	reg_veiculos veiculos;
-	int id, resposta;
-	db_veiculo = fopen("db_veiculos.dat", "rb");
-	if (db_veiculo == NULL){
-		cout << "Erro ao abrir o arquivo" << endl;
-		return 1;
-	} //if para verificar se o banco está legivel
+int cadVeiculo(){    //cadastro dos veiculos
+    reg_veiculos veiculos;
+    int resposta;
+    std::system("cls");
+    db_veiculo = fopen("db_veiculos.dat", "ab");
 
-	do {
-		bool encontrado = false;
-		rewind(db_veiculo);
-		cout << "Digite o ID da pessoa";
-		cin >> id;
+    if (db_veiculo == NULL) {
+        cout << "Erro ao abrir o arquivo" << endl;
+        return 1;
+    }
 
-		while (fread(&veiculos, sizeof(reg_veiculos), 1, db_veiculo) == 1){
-			if (veiculos.id == id){
-				cout << "ID: " << veiculos.id       << endl;
-				cout << "Placa: " << veiculos.placa << endl;
-				cout << "Modelo: " << veiculos.modelo << endl;
-				cout << "Ano: " << veiculos.ano 	<< endl;
-				cout << "Tipo: " << veiculos.tipo 	<< endl;
-				cout << "Valor: " << veiculos.valor << endl;
-				cout << "Data de cadastro: " << ctime(&veiculos.cadVeiculo) << endl;
-				encontrado = true;
-				break;
-			}
-		}
+    do {
 
-		if (!encontrado){
-			cout << "Cliente nao encontrado" << endl;
-		}
+        cout << "Digite o ID do Veiculo:" << endl;
+        while (!(cin >> veiculos.id)){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "ID invalido. Digite novamente:" << endl;
+        }
 
-		cout << "Deseja continuar pesquisando? (digite 1 para continuar/2 para sair): ";
-		cin >> resposta;
-	} while (resposta == 1);
+        cout << "Digite o numero da placa veiculo:" << endl;
+        cin >> ws;
+        while (!cin.getline(veiculos.placa, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
 
-	fclose(db_veiculo);
-	return 0;
+        cout << "Digite o modelo do veiculo:" << endl;
+        cin >> ws;
+        while (!cin.getline(veiculos.modelo, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
+
+        cout << "Digite a marca do veiculo:" << endl;
+        cin >> ws;
+        while (!cin.getline(veiculos.marca, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
+
+        cout << "Digite o ano do veiculo:" << endl;
+        cin >> ws;
+        while (!cin.getline(veiculos.ano, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
+
+        cout << "Digite o tipo do veiculo:" << endl;
+        cin >> ws;
+        while (!cin.getline(veiculos.tipo, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
+
+        cout << "Digite o valor do veiculo:" << endl;
+        cin >> ws;
+        while (!cin.getline(veiculos.valor, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
+
+        veiculos.cadVeiculo = time(nullptr);
+        fwrite(&veiculos, sizeof(veiculos), 1, db_veiculo);
+
+        cout << "Cadastro realizado:" << endl;
+
+        cout << "Deseja continuar cadastrando? (digite 1 para continuar/2 para sair): ";
+        while (!(cin >> resposta) || (resposta != 1 && resposta != 2)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Resposta invalida. Digite 1 ou 2:" << endl;
+        }
+
+    } while (resposta == 1);
+
+    fclose(db_veiculo);
+    return 0;
 }
 
- int pesquisalocacao(){
-	reg_locacoes locacao;
-	char id[50];
-int resposta;
-	db_locacoes = fopen("db_locacoes.dat", "rb");
-	if (db_locacoes == NULL){
-		cout << "Erro ao abrir o arquivo" << endl;
-		return 1;
-	} //if para verificar se o banco está legivel
+int novalocacao(){    //cadastro de locacoes
+    reg_locacoes locacao;
+    int resposta = 1;
 
-	do {
-		bool encontrado = false;
-		rewind(db_locacoes);
-		cout << "Digite o ID da pessoa";
-		cin >> id;
+    db_locacoes = fopen("db_locacoes.dat", "ab");
 
-		while (fread(&locacao, sizeof(reg_locacoes), 1, db_locacoes) == 1){
-			if (strcmp(locacao.cliente, id) == 0){
-				cout << "ID: " << locacao.cliente       << endl;
-				cout << "Placa: " << locacao.vei_placa << endl;
-				cout << "Dias: " << locacao.dias << endl;
-				cout << "Valor: " << locacao.valor 	<< endl;
-				cout << "Data de cadastro: " << ctime(&locacao.cadastro) << endl;
-				encontrado = true;
-				break;
-			}
-		}
+    if (db_locacoes == NULL) {
+        cout << "Erro ao abrir o arquivo" << endl;
+        return 1;
+    }
 
-		if (!encontrado){
-			cout << "Cliente nao encontrado" << endl;
-		}
+    do {
+        cout << "Digite o ID do cliente para nova locacao:" << endl;
+        cin >> ws;
+        while (!cin.getline(locacao.cliente, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
 
-		cout << "Deseja continuar pesquisando? (digite 1 para continuar/2 para sair): ";
-		cin >> resposta;
-	} while (resposta == 1);
-	fclose(db_locacoes);
-	
-	return 0;
+        cout << "Digite o numero da placa veiculo:" << endl;
+        cin >> ws;
+        while (!cin.getline(locacao.vei_placa, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
+
+        cout << "Dias:" << endl;
+        cin >> ws;
+        while (!cin.getline(locacao.dias, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
+
+        cout << "Digite o valor:" << endl;
+        cin >> ws;
+        while (!cin.getline(locacao.valor, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
+
+        locacao.cadastro = time(nullptr);
+
+        fwrite(&locacao, sizeof(reg_locacoes), 1, db_locacoes);
+
+        cout << "Cadastro realizado:" << endl;
+        cout << "Deseja continuar cadastrando? (digite 1 para continuar/2 para sair): ";
+
+        while (!(cin >> resposta) || (resposta != 1 && resposta != 2)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Resposta invalida. Digite 1 ou 2:" << endl;
+        }
+
+    } while (resposta == 1);
+
+    fclose(db_locacoes);
+    return 0;
+}
+
+int CadastroCliente(){    //cadastro de locacoes
+    reg_clientes clientes;
+    int resposta = 1;
+
+    db_clientes = fopen("db_clientes.dat", "ab");
+
+    if (db_clientes == NULL) {
+        cout << "Erro ao abrir o arquivo" << endl;
+        return 1;
+    }
+
+    do {
+        cout << "Digite o ID do cliente:" << endl;
+        while (!(cin >> clientes.id)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "ID invalido. Digite novamente:" << endl;
+        }
+
+        cout << "Digite o nome do cliente:" << endl;
+        cin >> ws;
+        while (!cin.getline(clientes.nome, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
+
+        cout << "Digite o CPF:" << endl;
+        cin >> ws;
+        while (!cin.getline(clientes.cpf, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
+
+        cout << "Digite o endereco:" << endl;
+        cin >> ws;
+        while (!cin.getline(clientes.endereco, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
+
+        cout << "Digite o Telefone:" << endl;
+        cin >> ws;
+        while (!cin.getline(clientes.telefone, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
+
+        clientes.cadCliente = time(nullptr);
+
+        fwrite(&clientes, sizeof(reg_clientes), 1, db_clientes);
+
+        cout << "Cadastro realizado:" << endl;
+        cout << "Deseja continuar cadastrando? (digite 1 para continuar/2 para sair): ";
+
+        while (!(cin >> resposta) || (resposta != 1 && resposta != 2)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Resposta invalida. Digite 1 ou 2:" << endl;
+        }
+
+    } while (resposta == 1);
+
+    fclose(db_clientes);
+    return 0;
+}
+
+int pesquisacliente(){
+    reg_clientes clientes;
+    int id, resposta;
+
+    db_clientes = fopen("db_clientes.dat", "rb");
+
+    if (db_clientes == NULL){
+        cout << "Erro ao abrir o arquivo" << endl;
+        return 1;
+    } //if para verificar se o banco está legivel
+
+    do {
+        bool encontrado = false;
+        rewind(db_clientes);
+
+        cout << "Digite o ID da pessoa";
+        while (!(cin >> id)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "ID invalido. Digite novamente:" << endl;
+        }
+
+        while (fread(&clientes, sizeof(reg_clientes), 1, db_clientes) == 1){
+            if (clientes.id == id){
+                cout << "ID: " << clientes.id << endl;
+                cout << "Nome: " << clientes.nome << endl;
+                cout << "CPF: " << clientes.cpf << endl;
+                cout << "Telefone: " << clientes.telefone << endl;
+                cout << "Endereco: " << clientes.endereco << endl;
+                cout << "Data de cadastro: " << ctime(&clientes.cadCliente) << endl;
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado){
+            cout << "Cliente nao encontrado" << endl;
+        }
+
+        cout << "Deseja continuar pesquisando? (digite 1 para continuar/2 para sair): ";
+        while (!(cin >> resposta) || (resposta != 1 && resposta != 2)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Resposta invalida. Digite 1 ou 2:" << endl;
+        }
+
+    } while (resposta == 1);
+
+    fclose(db_clientes);
+    return 0;
+}
+
+int pesquisaveiculos(){
+    reg_veiculos veiculos;
+    int id, resposta;
+
+    db_veiculo = fopen("db_veiculos.dat", "rb");
+
+    if (db_veiculo == NULL){
+        cout << "Erro ao abrir o arquivo" << endl;
+        return 1;
+    } //if para verificar se o banco está legivel
+
+    do {
+        bool encontrado = false;
+        rewind(db_veiculo);
+
+        cout << "Digite o ID da pessoa";
+        while (!(cin >> id)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "ID invalido. Digite novamente:" << endl;
+        }
+
+        while (fread(&veiculos, sizeof(reg_veiculos), 1, db_veiculo) == 1){
+            if (veiculos.id == id){
+                cout << "ID: " << veiculos.id << endl;
+                cout << "Placa: " << veiculos.placa << endl;
+                cout << "Modelo: " << veiculos.modelo << endl;
+                cout << "Ano: " << veiculos.ano << endl;
+                cout << "Tipo: " << veiculos.tipo << endl;
+                cout << "Valor: " << veiculos.valor << endl;
+                cout << "Data de cadastro: " << ctime(&veiculos.cadVeiculo) << endl;
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado){
+            cout << "Cliente nao encontrado" << endl;
+        }
+
+        cout << "Deseja continuar pesquisando? (digite 1 para continuar/2 para sair): ";
+        while (!(cin >> resposta) || (resposta != 1 && resposta != 2)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Resposta invalida. Digite 1 ou 2:" << endl;
+        }
+
+    } while (resposta == 1);
+
+    fclose(db_veiculo);
+    return 0;
+}
+
+int pesquisalocacao(){
+    reg_locacoes locacao;
+    char id[50];
+    int resposta;
+
+    db_locacoes = fopen("db_locacoes.dat", "rb");
+
+    if (db_locacoes == NULL){
+        cout << "Erro ao abrir o arquivo" << endl;
+        return 1;
+    } //if para verificar se o banco está legivel
+
+    do {
+        bool encontrado = false;
+        rewind(db_locacoes);
+
+        cout << "Digite o ID da pessoa";
+        cin >> ws;
+        while (!cin.getline(id, 50)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Texto muito longo. Digite novamente:" << endl;
+        }
+
+        while (fread(&locacao, sizeof(reg_locacoes), 1, db_locacoes) == 1){
+            if (strcmp(locacao.cliente, id) == 0){
+                cout << "ID: " << locacao.cliente << endl;
+                cout << "Placa: " << locacao.vei_placa << endl;
+                cout << "Dias: " << locacao.dias << endl;
+                cout << "Valor: " << locacao.valor << endl;
+                cout << "Data de cadastro: " << ctime(&locacao.cadastro) << endl;
+                encontrado = true;
+            }
+        }
+
+        if (!encontrado){
+            cout << "Cliente nao encontrado" << endl;
+        }
+
+        cout << "Deseja continuar pesquisando? (digite 1 para continuar/2 para sair): ";
+        while (!(cin >> resposta) || (resposta != 1 && resposta != 2)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Resposta invalida. Digite 1 ou 2:" << endl;
+        }
+
+    } while (resposta == 1);
+
+    fclose(db_locacoes);
+    return 0;
 }
 
 int relatorio(){
-	reg_clientes clientes;
-	reg_veiculos veiculos;
-	reg_locacoes locacoes;
-	FILE *arquivo_clientes, *arquivo_veiculos, *arquivo_locacoes;
-	int opcao;
-	
-	cout << "GERAR RELATORIOS" << endl;
-	cout << "1. Relatorio de Clientes" << endl;
-	cout << "2. Relatorio de Veiculos" << endl;
-	cout << "3. Relatorio de Locacoes" << endl;
-	cout << "0. Voltar ao Menu Principal" << endl;
-	cout << "Escolha uma opcao: ";
-	cin >> opcao;
-	
-	switch (opcao){
-		case 1:
-			arquivo_clientes = fopen("db_clientes.dat", "rb");
-			if (arquivo_clientes == NULL){
-				cout << "Erro ao abrir o arquivo" << endl;
-				return 1;
-			}
-			cout << "RELATORIO DE CLIENTES" << endl;
-			cout << "==========================================" << endl;
-			cout << "Id | Nome | CPF | Telefone | Endereco | Data de Cadastro" << endl;
-			while (fread(&clientes, sizeof(reg_clientes), 1, arquivo_clientes) == 1){
-				cout << clientes.id << " | " << clientes.nome << " | " << clientes.cpf << " | " << clientes.telefone << " | " << clientes.endereco << " | " << ctime(&clientes.cadCliente) << endl;
-			}
-			cout << "==========================================" << endl;
-			fclose(arquivo_clientes);
-			break;
+    reg_clientes clientes;
+    reg_veiculos veiculos;
+    reg_locacoes locacoes;
+    FILE *arquivo_clientes, *arquivo_veiculos, *arquivo_locacoes;
+    int opcao;
 
-		case 2:
-			arquivo_veiculos = fopen("db_veiculos.dat", "rb");
-			if (arquivo_veiculos == NULL){
-				cout << "Erro ao abrir o arquivo" << endl;
-				return 1;
-			}
-			cout << "RELATORIO DE VEICULOS" << endl;
-			cout << "==========================================" << endl;
-			cout << "Id | Modelo | Marca | Ano | Tipo | Placa | Valor | Data de Cadastro" << endl;
-			while (fread(&veiculos, sizeof(reg_veiculos), 1, arquivo_veiculos) == 1){
-				cout << veiculos.id << " | " << veiculos.modelo << " | " << veiculos.marca << " | " << veiculos.ano << " | " << veiculos.tipo << " | " << veiculos.placa << " | " << veiculos.valor << " | " << ctime(&veiculos.cadVeiculo) << endl;
-			}
-			cout << "==========================================" << endl;
-			fclose(arquivo_veiculos);
-			break;
-		case 3:
-			arquivo_locacoes = fopen("db_locacoes.dat", "rb");
-			if (arquivo_locacoes == NULL){
-				cout << "Erro ao abrir o arquivo" << endl;
-				return 1;
-			}
-			cout << "RELATORIO DE LOCACOES" << endl;
-			cout << "==========================================" << endl;
-			cout << " Clientes| Placa do veiculo | Dias | Valor |Cadastro " << endl;
-			while (fread(&locacoes, sizeof(reg_locacoes), 1, arquivo_locacoes) == 1){
-				cout << locacoes.cliente << " | " << locacoes.vei_placa << " | " << locacoes.dias << " | " << locacoes.valor << " | " << ctime(&locacoes.cadastro) << endl;
-			}
-			cout << "==========================================" << endl;
-			fclose(arquivo_locacoes);
-			
-			break; 
-		case 0:
-			break;
-		default:
-			cout << "Opcao invalida" << endl;
-			break;
-	}
+    cout << "GERAR RELATORIOS" << endl;
+    cout << "1. Relatorio de Clientes" << endl;
+    cout << "2. Relatorio de Veiculos" << endl;
+    cout << "3. Relatorio de Locacoes" << endl;
+    cout << "0. Voltar ao Menu Principal" << endl;
+    cout << "Escolha uma opcao: ";
+
+    while (!(cin >> opcao) || opcao < 0 || opcao > 3) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Opcao invalida. Digite novamente:" << endl;
+    }
+
+    switch (opcao){
+        case 1:
+            arquivo_clientes = fopen("db_clientes.dat", "rb");
+
+            if (arquivo_clientes == NULL){
+                cout << "Erro ao abrir o arquivo" << endl;
+                return 1;
+            }
+
+            cout << "RELATORIO DE CLIENTES" << endl;
+            cout << "==========================================" << endl;
+            cout << "Id | Nome | CPF | Telefone | Endereco | Data de Cadastro" << endl;
+
+            while (fread(&clientes, sizeof(reg_clientes), 1, arquivo_clientes) == 1){
+                cout << clientes.id << " | " << clientes.nome << " | " << clientes.cpf << " | " << clientes.telefone << " | " << clientes.endereco << " | " << ctime(&clientes.cadCliente) << endl;
+            }
+
+            cout << "==========================================" << endl;
+            fclose(arquivo_clientes);
+            break;
+
+        case 2:
+            arquivo_veiculos = fopen("db_veiculos.dat", "rb");
+
+            if (arquivo_veiculos == NULL){
+                cout << "Erro ao abrir o arquivo" << endl;
+                return 1;
+            }
+
+            cout << "RELATORIO DE VEICULOS" << endl;
+            cout << "==========================================" << endl;
+            cout << "Id | Modelo | Marca | Ano | Tipo | Placa | Valor | Data de Cadastro" << endl;
+
+            while (fread(&veiculos, sizeof(reg_veiculos), 1, arquivo_veiculos) == 1){
+                cout << veiculos.id << " | " << veiculos.modelo << " | " << veiculos.marca << " | " << veiculos.ano << " | " << veiculos.tipo << " | " << veiculos.placa << " | " << veiculos.valor << " | " << ctime(&veiculos.cadVeiculo) << endl;
+            }
+
+            cout << "==========================================" << endl;
+            fclose(arquivo_veiculos);
+            break;
+
+        case 3:
+            arquivo_locacoes = fopen("db_locacoes.dat", "rb");
+
+            if (arquivo_locacoes == NULL){
+                cout << "Erro ao abrir o arquivo" << endl;
+                return 1;
+            }
+
+            cout << "RELATORIO DE LOCACOES" << endl;
+            cout << "==========================================" << endl;
+            cout << " Clientes| Placa do veiculo | Dias | Valor |Cadastro " << endl;
+
+            while (fread(&locacoes, sizeof(reg_locacoes), 1, arquivo_locacoes) == 1){
+                cout << locacoes.cliente << " | " << locacoes.vei_placa << " | " << locacoes.dias << " | " << locacoes.valor << " | " << ctime(&locacoes.cadastro) << endl;
+            }
+
+            cout << "==========================================" << endl;
+            fclose(arquivo_locacoes);
+            break;
+
+        case 0:
+            break;
+
+        default:
+            cout << "Opcao invalida" << endl;
+            break;
+    }
+
+    return 0;
 }
 
-
- 
- 
- 
-void menu();  
+void menu();
 void menuexcluir();
 void menuerelatorio();
+
 // Submenu para o modulo de cadastros
 void menuCadastro(){  // Tela Menu de Cadastro
-	char resposta = ' ';
-	do {
-		std::system("cls");
-		cout << "===========================================" << endl;
-		cout << "           LOCADORA - MODULO DE CADASTRO   " << endl;
-		cout << "===========================================" << endl;
-		cout << "  1. Cadastrar Cliente                     " << endl;
-		cout << "  2. Cadastrar Veiculo                     " << endl;
-		cout << "  3. Nova Locacao                          " << endl;
-		cout << "  0. Voltar ao Menu Principal              " << endl;
-		cout << "===========================================" << endl;
-		cout << "Selecione uma opcao: ";
-		cin >> resposta;
+    char resposta = ' ';
 
-		switch (resposta){
-			case '1':
-				std::system("cls");
-				cadCliente();
-				break;
-			case '2':
-				std::system("cls");
-				cadVeiculo();
-				break;
-			case '3':
-				std::system("cls");
-				novalocacao();
-				break;
-			
-			case '0':
-				std::system("cls");
-				break;
-			default:
-				cout << "\nOpcao invalida! Tente novamente.\n" << endl;
-				std::system("pause");
-				break;
-		}
-	} while (resposta != '0');
+    do {
+        std::system("cls");
+        cout << "===========================================" << endl;
+        cout << "           LOCADORA - MODULO DE CADASTRO   " << endl;
+        cout << "===========================================" << endl;
+        cout << "  1. Cadastrar Cliente                     " << endl;
+        cout << "  2. Cadastrar Veiculo                     " << endl;
+        cout << "  3. Nova Locacao                          " << endl;
+        cout << "  0. Voltar ao Menu Principal              " << endl;
+        cout << "===========================================" << endl;
+        cout << "Selecione uma opcao: ";
+        cin >> resposta;
+
+        switch (resposta){
+            case '1':
+                std::system("cls");
+                cadCliente();
+                break;
+
+            case '2':
+                std::system("cls");
+                cadVeiculo();
+                break;
+
+            case '3':
+                std::system("cls");
+                novalocacao();
+                break;
+
+            case '0':
+                std::system("cls");
+                break;
+
+            default:
+                cout << "\nOpcao invalida! Tente novamente.\n" << endl;
+                std::system("pause");
+                break;
+        }
+
+    } while (resposta != '0');
 }
-
-
 
 void menuConsulta(){  // Tela Menu de Consulta
-	char resposta = ' ';
-	do {
-		std::system("cls");
-		cout << "===========================================" << endl;
-		cout << "           LOCADORA - Pesquisa		    " 	  << endl;
-		cout << "===========================================" << endl;
-		cout << "  1.  Listar Clientes                   	" << endl;
-		cout << "  2.  Listar Veiculos                     	" << endl;
-		cout << "  3. Listar Locacoes                       " << endl;
-		cout << "  0. Voltar ao Menu Principal              " << endl;
-		cout << "===========================================" << endl;
-		cout << "Selecione uma opcao: ";
-		cin >> resposta;
+    char resposta = ' ';
 
-		switch (resposta){
-			case '1':
-				std::system("cls");
-				pesquisacliente();
-			
-				break;
-			case '2':
-				std::system("cls");
-				pesquisaveiculos();
-				break;
-			case '3':
-				std::system("cls");
-				pesquisalocacao();
-				break;
-			//case '4':
-				//std::system("cls");
-				//menuexcluir(); 
-				//break;
-			//case '5':
-				//std::system("cls");
-				//menuerelatorio();
-				//break;
-			case '0': 
-			    menu();
-				break;
-			default:
-				cout << "\nOpcao invalida! Tente novamente.\n" << endl;
-				std::system("pause");
-				break;
-		}
-	} while (resposta != '0');
+    do {
+        std::system("cls");
+        cout << "===========================================" << endl;
+        cout << "           LOCADORA - Pesquisa             " << endl;
+        cout << "===========================================" << endl;
+        cout << "  1.  Listar Clientes                      " << endl;
+        cout << "  2.  Listar Veiculos                      " << endl;
+        cout << "  3. Listar Locacoes                       " << endl;
+        cout << "  0. Voltar ao Menu Principal              " << endl;
+        cout << "===========================================" << endl;
+        cout << "Selecione uma opcao: ";
+        cin >> resposta;
+
+        switch (resposta){
+            case '1':
+                std::system("cls");
+                pesquisacliente();
+                break;
+
+            case '2':
+                std::system("cls");
+                pesquisaveiculos();
+                break;
+
+            case '3':
+                std::system("cls");
+                pesquisalocacao();
+                break;
+
+            //case '4':
+                //std::system("cls");
+                //menuexcluir();
+                //break;
+
+            //case '5':
+                //std::system("cls");
+                //menuerelatorio();
+                //break;
+
+            case '0':
+                break;
+
+            default:
+                cout << "\nOpcao invalida! Tente novamente.\n" << endl;
+                std::system("pause");
+                break;
+        }
+
+    } while (resposta != '0');
 }
-
-
-
-
 
 void menuEditar(){   // Tela Menu de Edicao
-	char resposta = ' ';
-	do {
-		std::system("cls");
-		cout << "===========================================" << endl;
-		cout << "           LOCADORA - Edicao	            " << endl;
-		cout << "===========================================" << endl;
-		cout << "  1.  Editar Clientes                   	" << endl;
-		cout << "  2.  Editar Veiculos                     	" << endl;
-		cout << "  3.  Editar  Locacoes                      " << endl;
-		cout << "  0. Voltar ao Menu Principal              " << endl;
-		cout << "===========================================" << endl;
-		cout << "Selecione uma opcao: ";
-		cin >> resposta;
+    char resposta = ' ';
 
-		switch (resposta){
-			case '1':
-				std::system("cls");
-				//cadCliente();
-				break;
-			case '2':
-				std::system("cls");
-				//cadVeiculo();
-				break;
-			case '3':
-				std::system("cls");
-				//menuEditar(); 
-				break;
-			//case '4':
-				//std::system("cls");
-				//menuexcluir();  
-				//break;
-			//case '5':
-				//std::system("cls");
-				//menuerelatorio();
-				//break;
-				//break;
-			case '0':
-				break;
-			default:
-				cout << "\nOpcao invalida! Tente novamente.\n" << endl;
-				std::system("pause");
-				break;
-		}
-	} while (resposta != '0');
+    do {
+        std::system("cls");
+        cout << "===========================================" << endl;
+        cout << "           LOCADORA - Edicao               " << endl;
+        cout << "===========================================" << endl;
+        cout << "  1.  Editar Clientes                      " << endl;
+        cout << "  2.  Editar Veiculos                      " << endl;
+        cout << "  3.  Editar  Locacoes                     " << endl;
+        cout << "  0. Voltar ao Menu Principal              " << endl;
+        cout << "===========================================" << endl;
+        cout << "Selecione uma opcao: ";
+        cin >> resposta;
+
+        switch (resposta){
+            case '1':
+                std::system("cls");
+                //cadCliente();
+                break;
+
+            case '2':
+                std::system("cls");
+                //cadVeiculo();
+                break;
+
+            case '3':
+                std::system("cls");
+                //menuEditar();
+                break;
+
+            //case '4':
+                //std::system("cls");
+                //menuexcluir();
+                //break;
+
+            //case '5':
+                //std::system("cls");
+                //menuerelatorio();
+                //break;
+                //break;
+
+            case '0':
+                break;
+
+            default:
+                cout << "\nOpcao invalida! Tente novamente.\n" << endl;
+                std::system("pause");
+                break;
+        }
+
+    } while (resposta != '0');
 }
-
-
-
-
-
 
 void menuexcluir(){ // Tela Menu de Exclusao
-	char resposta = ' ';
-	do {
-		std::system("cls");
-		cout << "===========================================" << endl;
-		cout << "          LOCADORA -  exclusao	            " << endl;
-		cout << "===========================================" << endl;
-		cout << "  1.  Excluir Clientes                   	" << endl;
-		cout << "  2.  Excluir Veiculos                     " << endl;
-		cout << "  3.  Excluir  Locacoes                    " << endl;
-		cout << "  0. Voltar ao Menu Principal              " << endl;
-		cout << "===========================================" << endl;
-		cout << "Selecione uma opcao: ";
-		cin >> resposta;
+    char resposta = ' ';
 
-		switch (resposta){
-			case '1':
-				std::system("cls");
-				//cadCliente();
-				break;
-			case '2':
-				std::system("cls");
-				//cadVeiculo();
-				break;
-			case '3':
-				std::system("cls");
-				//menuEditar(); 
-				break;
-			//case '4':
-				//std::system("cls");
-				//menuexcluir(); 
-				//break;
-			//case '5':
-				//std::system("cls");
-				//menuerelatorio();
-				//break;
-				//break;
-			case '0':
-				break;
-			default:
-				cout << "\nOpcao invalida! Tente novamente.\n" << endl;
-				std::system("pause");
-				break;
-		}
-	} while (resposta != '0');
+    do {
+        std::system("cls");
+        cout << "===========================================" << endl;
+        cout << "          LOCADORA -  exclusao             " << endl;
+        cout << "===========================================" << endl;
+        cout << "  1.  Excluir Clientes                     " << endl;
+        cout << "  2.  Excluir Veiculos                     " << endl;
+        cout << "  3.  Excluir  Locacoes                    " << endl;
+        cout << "  0. Voltar ao Menu Principal              " << endl;
+        cout << "===========================================" << endl;
+        cout << "Selecione uma opcao: ";
+        cin >> resposta;
+
+        switch (resposta){
+            case '1':
+                std::system("cls");
+                //cadCliente();
+                break;
+
+            case '2':
+                std::system("cls");
+                //cadVeiculo();
+                break;
+
+            case '3':
+                std::system("cls");
+                //menuEditar();
+                break;
+
+            //case '4':
+                //std::system("cls");
+                //menuexcluir();
+                //break;
+
+            //case '5':
+                //std::system("cls");
+                //menuerelatorio();
+                //break;
+                //break;
+
+            case '0':
+                break;
+
+            default:
+                cout << "\nOpcao invalida! Tente novamente.\n" << endl;
+                std::system("pause");
+                break;
+        }
+
+    } while (resposta != '0');
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void menu(){ // Tela Menu Principal
-	char resposta = ' ';
-	do {
-		std::system("cls");
-		cout << "===========================================" << endl;
-		cout << "        LOCADORA - MENU PRINCIPAL          " << endl;
-		cout << "===========================================" << endl;
-		cout << "  1. Modulo de cadastro                    " << endl;
-		cout << "  2. Pesquisa                   			" << endl;
-		cout << "  3. Edicao                                " << endl;
-		cout << "  4. Excluir                               " << endl;
-		cout << "  5. Relatorio                             " << endl;
-		cout << "  6. Sair                                  " << endl;
-		cout << "===========================================" << endl;
-		cout << "Selecione uma opcao [1-6]: ";
-		cin >> resposta;
+    char resposta = ' ';
 
-		switch (resposta){
-			case '1':
-				menuCadastro();
-				break;
-			case '2':
-				std::system("cls");
-				menuConsulta();
-				break;
-			case '3':
-				std::system("cls");
-				menuEditar(); 
-				break;
-			case '4':
-				std::system("cls");
-				menuexcluir();
-				break;
-			case '5':
-				std::system("cls");
-				relatorio(); 
-				break;
-				//break;
-			case '6':
-				std::system("cls");
-				cout << "\n   Programa encerrado com sucesso!\n" << endl;
-				break;
-			default:
-				cout << "\nOpcao invalida! Tente novamente.\n" << endl;
-				std::system("pause");
-				break;
-		}
-	} while (resposta != '6');
-}   
-    
-    
-    
-    
-int main(){ 
-	menu(); 
+    do {
+        std::system("cls");
+        cout << "===========================================" << endl;
+        cout << "        LOCADORA - MENU PRINCIPAL          " << endl;
+        cout << "===========================================" << endl;
+        cout << "  1. Modulo de cadastro                    " << endl;
+        cout << "  2. Pesquisa                              " << endl;
+        cout << "  3. Edicao                                " << endl;
+        cout << "  4. Excluir                               " << endl;
+        cout << "  5. Relatorio                             " << endl;
+        cout << "  6. Sair                                  " << endl;
+        cout << "===========================================" << endl;
+        cout << "Selecione uma opcao [1-6]: ";
+        cin >> resposta;
 
-	
-	
+        switch (resposta){
+            case '1':
+                menuCadastro();
+                break;
+
+            case '2':
+                std::system("cls");
+                menuConsulta();
+                break;
+
+            case '3':
+                std::system("cls");
+                menuEditar();
+                break;
+
+            case '4':
+                std::system("cls");
+                menuexcluir();
+                break;
+
+            case '5':
+                std::system("cls");
+                relatorio();
+                std::system("pause");
+                break;
+                //break;
+
+            case '6':
+                std::system("cls");
+                cout << "\n   Programa encerrado com sucesso!\n" << endl;
+                break;
+
+            default:
+                cout << "\nOpcao invalida! Tente novamente.\n" << endl;
+                std::system("pause");
+                break;
+        }
+
+    } while (resposta != '6');
 }
 
-
-
-
+int main(){
+    menu();
+}
