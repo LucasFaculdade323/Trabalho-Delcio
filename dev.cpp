@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <cstring>
 #include <limits>
+#include <string>
 using namespace std;
 
 FILE *db_clientes, *db_veiculo, *db_locacoes; // Ponteiros
@@ -684,7 +685,7 @@ void menuEditar(){   // Tela Menu de Edicao
     reg_clientes clientes;
     reg_veiculos veiculos;
     reg_locacoes locacao;
-    FILE *clientes, *veiculos, *locacao;
+    FILE *arq_clientes, *arq_veiculos, *arq_locacao;
     
     char resposta = ' ';
 
@@ -704,28 +705,38 @@ void menuEditar(){   // Tela Menu de Edicao
         switch (resposta){
             case '1':
                 std::system("cls");
+                arq_clientes = fopen("db_clientes.dat", "rb+");
+
+if (arq_clientes == NULL) {
+    cout << "Erro ao abrir o arquivo!" << endl;
+    break;
+}
                 cout << "Digite o ID do Cliente:";
-                cin >> cliente.id;
+                cin >> clientes.id;
                 cin.ignore(1000, '\n');
                 cout << "CPF";
-                cin.getline(cliente.cpf, 50);
+                cin.getline(clientes.cpf, 50);
                 cout << "Nome";
-                cin.getline(cliente.nome, 50);
+                cin.getline(clientes.nome, 50);
                 cout << "Endereco";
-                cin.getline(cliente.endereco, 50);
+                cin.getline(clientes.endereco, 50);
                 cout << "Telefone";
-                cin.getline(cliente.telefone, 50);
+                cin.getline(clientes.telefone, 50);
 
-                fseek(clientes, -(long) sizeof(reg_clientes), SEEK_CUR);
-                fwrite(&clientes, sizeof(reg_clientes), 1, clientes);
-                fseek(clientes, 0, SEEK_CUR);
+                fseek(arq_clientes, -(long) sizeof(reg_clientes), SEEK_CUR);
+                fwrite(&clientes, sizeof(reg_clientes), 1, arq_clientes);
+                fseek(arq_clientes, 0, SEEK_CUR);
                 cout << "Cliente atualizado com sucesso!" << endl;
 
                 break;
 
             case '2':
                 std::system("cls");
-                 std::system("cls");
+                arq_veiculos = fopen("db_veiculos.dat", "rb+");
+                if (arq_veiculos == NULL) {
+                cout << "Erro ao abrir o arquivo!" << endl;
+                break;
+                }
                 cout << "Digite o ID do Veiculo:";
                 cin >> veiculos.id;
                 cin.ignore(1000, '\n');
@@ -740,9 +751,9 @@ void menuEditar(){   // Tela Menu de Edicao
                 cout << "Valor";
                 cin.getline(veiculos.valor, 50);
 
-                fseek(veiculos, -(long) sizeof(reg_veiculos), SEEK_CUR);
-                fwrite(&veiculos, sizeof(reg_veiculos), 1, veiculos);
-                fseek(veiculos, 0, SEEK_CUR);
+                fseek(arq_veiculos, -(long) sizeof(reg_veiculos), SEEK_CUR);
+                fwrite(&veiculos, sizeof(reg_veiculos), 1, arq_veiculos);
+                fseek(arq_veiculos, 0, SEEK_CUR);
                 cout << "Veiculo atualizado com sucesso!" << endl;
 
                 break;
@@ -752,18 +763,18 @@ void menuEditar(){   // Tela Menu de Edicao
                 std::system("cls");
                  std::system("cls");
                 cout << "Digite o ID do Cliente:";
-                cin >> cliente.id;
+                cin >> clientes.id;
                 cin.ignore(1000, '\n');
                 cout << "Placa do veiculo";
-                cin.getline(veiculos.vei_placa, 50);
+                cin.getline(locacao.vei_placa, 50);
                 cout << "Dias";
                 cin.getline(locacao.dias, 50);
                 cout << "Valor";
                 cin.getline(locacao.valor, 50);
                
-                fseek(locacao, -(long) sizeof(reg_locacao), SEEK_CUR);
-               fwrite(&locao, sizeof(reg_locacao), 1, locacao);
-                fseek(locacao, 0, SEEK_CUR);
+                fseek(arq_locacao, -(long) sizeof(reg_locacoes), SEEK_CUR);
+               fwrite(&locacao, sizeof(reg_locacoes), 1, arq_locacao);
+                fseek(arq_locacao, 0, SEEK_CUR);
                 cout << "Locacao atualizado com sucesso!" << endl;
                 break;
             case '0':
@@ -779,11 +790,13 @@ void menuEditar(){   // Tela Menu de Edicao
 }
 
 void menuexcluir(){ // Tela Menu de Exclusao
+    string idLocacao;
+    FILE *arquivo, *temp;
     reg_clientes clientes;
     reg_veiculos veiculos;
     reg_locacoes locacoes;
     char resposta = ' ';
-
+    int id;
     do {
         std::system("cls");
         cout << "===========================================" << endl;
@@ -800,13 +813,13 @@ void menuexcluir(){ // Tela Menu de Exclusao
         switch (resposta){
             case '1':
                std::system("cls");
-               int id;
+               
                 cout << "Digite o ID do cliente";
                 cin >> id;
-                arquivo = fopen("db_clientes.dat,", "rb");
+                arquivo = fopen("db_clientes.dat", "rb");
                 if (arquivo != NULL){
                     temp = fopen("temp.dat" , "wb");
-                    while (fread(&clientes, sizeof(reg_clientes , arquivo) == 1, arquivo){
+                    while (fread(&clientes, sizeof(reg_clientes) , 1, arquivo) == 1){
                         if(clientes.id == id){
                             cout << "Cliente" << clientes.nome << "excluido!" << endl;
 
@@ -819,19 +832,18 @@ void menuexcluir(){ // Tela Menu de Exclusao
                     fclose(temp);
                     remove("db_clientes.dat");
                     rename("temp.dat", "db_clientes.dat");
-                )
                 }
                 break;
 
             case '2':
                 std::system("cls");
-                 int id;
+                
                 cout << "Digite o ID do veiculo";
                 cin >> id;
-                arquivo = fopen("db_veiculos.dat,", "rb");
+                arquivo = fopen("db_veiculos.dat", "rb");
                 if (arquivo != NULL){
                     temp = fopen("temp.dat" , "wb");
-                    while (fread(&veiculos, sizeof(reg_veiculos , arquivo) == 1, arquivo){
+                    while (fread(&veiculos, sizeof(reg_veiculos) , 1, arquivo) == 1){
                         if(veiculos.id == id){
                             cout << "Veiculos" << veiculos.id << "excluido!" << endl;
 
@@ -844,21 +856,26 @@ void menuexcluir(){ // Tela Menu de Exclusao
                     fclose(temp);
                     remove("db_veiculos.dat");
                     rename("temp.dat", "db_veiculos.dat");
-                )
+                
                 }
                 break;
 
             case '3':
                  std::system("cls");
-                 int id;
+                 
                 cout << "Digite o ID das locacoes";
-                cin >> id;
-                arquivo = fopen("db_locacoes.dat,", "rb");
+                cin >> idLocacao;
+                arquivo = fopen("db_locacoes.dat", "rb");
                 if (arquivo != NULL){
                     temp = fopen("temp.dat" , "wb");
-                    while (fread(&locacoes, sizeof(reg_locacoes , arquivo) == 1, arquivo){
-                        if(locacoes.id == id){
-                            cout << "Locacao" << locacoes.id << "excluido!" << endl;
+                    if (temp == NULL) {
+                    cout << "Erro ao criar arquivo!" << endl;
+                     fclose(arquivo);
+                     break;
+                    }
+                    while (fread(&locacoes, sizeof(reg_locacoes) , 1, arquivo) == 1){
+                        if(idLocacao == locacoes.cliente){
+                            cout << "Locacao do cliente " << locacoes.cliente << " excluido!" << endl;
 
                         }else{
                             fwrite(&locacoes, sizeof(reg_locacoes), 1, temp);
@@ -869,7 +886,7 @@ void menuexcluir(){ // Tela Menu de Exclusao
                     fclose(temp);
                     remove("db_locacoes.dat");
                     rename("temp.dat", "db_locacoes.dat");
-                )
+                
                 }
                 break;
                 case '0':
@@ -883,7 +900,6 @@ void menuexcluir(){ // Tela Menu de Exclusao
 
     } while (resposta != '0');
 }
-
 void menu(){ // Tela Menu Principal
     char resposta = ' ';
 
