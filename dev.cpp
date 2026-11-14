@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
@@ -55,7 +56,7 @@ int cadCliente(){
         cout << "Digite o Id do cliente:" << endl;
         while (!(cin >> clientes.id)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Id inválido. Digite novamente:" << endl;
         }
 
@@ -63,7 +64,7 @@ int cadCliente(){
         cin >> ws;
         while (!cin.getline(clientes.nome, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -71,7 +72,7 @@ int cadCliente(){
         cin >> ws;
         while (!cin.getline(clientes.cpf, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -79,7 +80,7 @@ int cadCliente(){
         cin >> ws;
         while (!cin.getline(clientes.telefone, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -87,7 +88,7 @@ int cadCliente(){
         cin >> ws;
         while (!cin.getline(clientes.endereco, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -99,7 +100,7 @@ int cadCliente(){
 
         while (!(cin >> resposta) || (resposta != 1 && resposta != 2)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Resposta Invalida. Digite 1 ou 2:";
         }
 
@@ -125,7 +126,7 @@ int cadVeiculo(){    //cadastro dos veiculos
         cout << "Digite o ID do Veiculo:" << endl;
         while (!(cin >> veiculos.id)){
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "ID invalido. Digite novamente:" << endl;
         }
 
@@ -133,7 +134,7 @@ int cadVeiculo(){    //cadastro dos veiculos
         cin >> ws;
         while (!cin.getline(veiculos.placa, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -141,7 +142,7 @@ int cadVeiculo(){    //cadastro dos veiculos
         cin >> ws;
         while (!cin.getline(veiculos.modelo, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -149,7 +150,7 @@ int cadVeiculo(){    //cadastro dos veiculos
         cin >> ws;
         while (!cin.getline(veiculos.marca, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -157,7 +158,7 @@ int cadVeiculo(){    //cadastro dos veiculos
         cin >> ws;
         while (!cin.getline(veiculos.ano, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -165,7 +166,7 @@ int cadVeiculo(){    //cadastro dos veiculos
         cin >> ws;
         while (!cin.getline(veiculos.tipo, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -173,7 +174,7 @@ int cadVeiculo(){    //cadastro dos veiculos
         cin >> ws;
         while (!cin.getline(veiculos.valor, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -185,7 +186,7 @@ int cadVeiculo(){    //cadastro dos veiculos
         cout << "Deseja continuar cadastrando? (digite 1 para continuar/2 para sair): ";
         while (!(cin >> resposta) || (resposta != 1 && resposta != 2)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Resposta invalida. Digite 1 ou 2:" << endl;
         }
 
@@ -211,7 +212,7 @@ int novalocacao(){    //cadastro de locacoes
         cin >> ws;
         while (!cin.getline(locacao.cliente, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -219,7 +220,7 @@ int novalocacao(){    //cadastro de locacoes
         cin >> ws;
         while (!cin.getline(locacao.vei_placa, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -227,7 +228,7 @@ int novalocacao(){    //cadastro de locacoes
         cin >> ws;
         while (!cin.getline(locacao.dias, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -235,7 +236,7 @@ int novalocacao(){    //cadastro de locacoes
         cin >> ws;
         while (!cin.getline(locacao.valor, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -248,7 +249,7 @@ int novalocacao(){    //cadastro de locacoes
 
         while (!(cin >> resposta) || (resposta != 1 && resposta != 2)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Resposta invalida. Digite 1 ou 2:" << endl;
         }
 
@@ -273,7 +274,7 @@ int CadastroCliente(){    //cadastro de locacoes
         cout << "Digite o ID do cliente:" << endl;
         while (!(cin >> clientes.id)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "ID invalido. Digite novamente:" << endl;
         }
 
@@ -281,7 +282,7 @@ int CadastroCliente(){    //cadastro de locacoes
         cin >> ws;
         while (!cin.getline(clientes.nome, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -289,7 +290,7 @@ int CadastroCliente(){    //cadastro de locacoes
         cin >> ws;
         while (!cin.getline(clientes.cpf, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -297,7 +298,7 @@ int CadastroCliente(){    //cadastro de locacoes
         cin >> ws;
         while (!cin.getline(clientes.endereco, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -305,7 +306,7 @@ int CadastroCliente(){    //cadastro de locacoes
         cin >> ws;
         while (!cin.getline(clientes.telefone, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -318,7 +319,7 @@ int CadastroCliente(){    //cadastro de locacoes
 
         while (!(cin >> resposta) || (resposta != 1 && resposta != 2)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Resposta invalida. Digite 1 ou 2:" << endl;
         }
 
@@ -346,7 +347,7 @@ int pesquisacliente(){
         cout << "Digite o ID da pessoa";
         while (!(cin >> id)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "ID invalido. Digite novamente:" << endl;
         }
 
@@ -370,7 +371,7 @@ int pesquisacliente(){
         cout << "Deseja continuar pesquisando? (digite 1 para continuar/2 para sair): ";
         while (!(cin >> resposta) || (resposta != 1 && resposta != 2)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Resposta invalida. Digite 1 ou 2:" << endl;
         }
 
@@ -398,7 +399,7 @@ int pesquisaveiculos(){
         cout << "Digite o ID da pessoa";
         while (!(cin >> id)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "ID invalido. Digite novamente:" << endl;
         }
 
@@ -423,7 +424,7 @@ int pesquisaveiculos(){
         cout << "Deseja continuar pesquisando? (digite 1 para continuar/2 para sair): ";
         while (!(cin >> resposta) || (resposta != 1 && resposta != 2)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Resposta invalida. Digite 1 ou 2:" << endl;
         }
 
@@ -453,7 +454,7 @@ int pesquisalocacao(){
         cin >> ws;
         while (!cin.getline(id, 50)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Texto muito longo. Digite novamente:" << endl;
         }
 
@@ -475,7 +476,7 @@ int pesquisalocacao(){
         cout << "Deseja continuar pesquisando? (digite 1 para continuar/2 para sair): ";
         while (!(cin >> resposta) || (resposta != 1 && resposta != 2)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore(1000, '\n');
             cout << "Resposta invalida. Digite 1 ou 2:" << endl;
         }
 
@@ -501,7 +502,7 @@ int relatorio(){
 
     while (!(cin >> opcao) || opcao < 0 || opcao > 3) {
         cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.ignore(1000, '\n');
         cout << "Opcao invalida. Digite novamente:" << endl;
     }
 
@@ -686,7 +687,11 @@ void menuEditar(){   // Tela Menu de Edicao
     reg_veiculos veiculos;
     reg_locacoes locacao;
     FILE *arq_clientes, *arq_veiculos, *arq_locacao;
-    
+    int idBusca;
+    bool encontrado;
+    long int posicao;
+    string idLocacao;
+
     char resposta = ' ';
 
     do {
@@ -713,6 +718,21 @@ if (arq_clientes == NULL) {
 }
                 cout << "Digite o ID do Cliente:";
                 cin >> clientes.id;
+                idBusca = clientes.id;
+encontrado = false;
+
+while (fread(&clientes, sizeof(reg_clientes), 1, arq_clientes) == 1) {
+    if (clientes.id == idBusca) {
+        encontrado = true;
+        break;
+    }
+}
+
+if (encontrado == false) {
+    cout << "Cliente nao encontrado!" << endl;
+    fclose(arq_clientes);
+    break;
+}
                 cin.ignore(1000, '\n');
                 cout << "CPF";
                 cin.getline(clientes.cpf, 50);
@@ -727,6 +747,7 @@ if (arq_clientes == NULL) {
                 fwrite(&clientes, sizeof(reg_clientes), 1, arq_clientes);
                 fseek(arq_clientes, 0, SEEK_CUR);
                 cout << "Cliente atualizado com sucesso!" << endl;
+                fclose(arq_clientes);
 
                 break;
 
@@ -739,6 +760,21 @@ if (arq_clientes == NULL) {
                 }
                 cout << "Digite o ID do Veiculo:";
                 cin >> veiculos.id;
+                idBusca = veiculos.id;
+encontrado = false;
+
+while (fread(&veiculos, sizeof(reg_veiculos), 1, arq_veiculos) == 1) {
+    if (veiculos.id == idBusca) {
+        encontrado = true;
+        break;
+    }
+}
+
+if (encontrado == false) {
+    cout << "Veiculo nao encontrado!" << endl;
+    fclose(arq_veiculos);
+    break;
+}
                 cin.ignore(1000, '\n');
                 cout << "Modelo";
                 cin.getline(veiculos.modelo, 50);
@@ -755,15 +791,32 @@ if (arq_clientes == NULL) {
                 fwrite(&veiculos, sizeof(reg_veiculos), 1, arq_veiculos);
                 fseek(arq_veiculos, 0, SEEK_CUR);
                 cout << "Veiculo atualizado com sucesso!" << endl;
-
+                fclose(arq_veiculos);
                 break;
 
             case '3':
                 std::system("cls");
-                std::system("cls");
-                 std::system("cls");
+               arq_locacao = fopen("db_locacoes.dat", "rb+");
+                if (arq_locacao == NULL) {
+                 cout << "Erro ao abrir o arquivo!" << endl;
+                break;
+                }
                 cout << "Digite o ID do Cliente:";
-                cin >> clientes.id;
+                cin >> idLocacao;
+                encontrado = false;
+
+            while (fread(&locacao, sizeof(reg_locacoes), 1, arq_locacao) == 1) {
+            if (idLocacao == locacao.cliente) {
+            encontrado = true;
+            break;
+        }
+        }
+
+if (encontrado == false) {
+    cout << "Locacao nao encontrada!" << endl;
+    fclose(arq_locacao);
+    break;
+}
                 cin.ignore(1000, '\n');
                 cout << "Placa do veiculo";
                 cin.getline(locacao.vei_placa, 50);
@@ -776,6 +829,7 @@ if (arq_clientes == NULL) {
                fwrite(&locacao, sizeof(reg_locacoes), 1, arq_locacao);
                 fseek(arq_locacao, 0, SEEK_CUR);
                 cout << "Locacao atualizado com sucesso!" << endl;
+                fclose(arq_locacao);
                 break;
             case '0':
                 break;
@@ -804,7 +858,7 @@ void menuexcluir(){ // Tela Menu de Exclusao
         cout << "===========================================" << endl;
         cout << "  1.  Excluir Clientes                     " << endl;
         cout << "  2.  Excluir Veiculos                     " << endl;
-        cout << "  3.  Excluir  Locacoes                    " << endl;
+        cout << "  3. Excluir  Locacoes                    " << endl;
         cout << "  0. Voltar ao Menu Principal              " << endl;
         cout << "===========================================" << endl;
         cout << "Selecione uma opcao: ";
